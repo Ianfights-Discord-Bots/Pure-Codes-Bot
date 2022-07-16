@@ -1,0 +1,31 @@
+{
+    "name": "trivia-bot",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "concurrently \"tsc -w\" \"nodemon ./dist/index.js --watch dist\"",
+        "start:dev": "tsc -w concurrently nodemon --watch dist -e js",
+        "start:prod": "node dist/index.js",
+        "build": "tsc",
+        "watch": "tsc -w"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "discord.js": "^13.5.0",
+        "dotenv": "^10.0.0",
+        "fs": "^0.0.1-security",
+        "glob": "^7.2.0",
+        "oldschooljs": "^2.1.58",
+        "prettier": "^2.7.1"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.2.0",
+        "@types/node": "^16.11.6",
+        "ts-node": "^10.4.0",
+        "ts-node-dev": "^1.1.8",
+        "typescript": "^4.4.4"
+    }
+}
