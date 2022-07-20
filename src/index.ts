@@ -15,6 +15,7 @@ export const client = new ExtendedClient();
 
 client.start();
 startJobs();
+client.user.setActivity("Watching monkeys codes!");
 // delPrevCheckouts();
 // createButtons();
 // initCheckouts();

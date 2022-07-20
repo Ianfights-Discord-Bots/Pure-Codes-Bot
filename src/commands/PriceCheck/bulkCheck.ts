@@ -35,7 +35,7 @@ export default new Command({
             const error = new MessageEmbed()
                 .setColor('#46bdf0')
                 .setTitle(`Bulk ${length} day codes`)
-                .setDescription(`${amount} ${length} day codes will cost the following ammounts\nCrypto ${'```'}$${trunc((codePrices[`${length}_day`] * amount))} ${'```'}\nGP${'```'}${Util.toKMB(codePrices[`${length}_day`] * amount * gpPrice * 1000000)} ${'```'}`)
+                .setDescription(`${amount} ${length} day codes will cost the following ammounts\nCrypto ${'```'}$${trunc((codePrices[`${length}_day`] * amount))} ${'```'}\nGP${'```'}${Util.toKMB((codePrices[`${length}_day`] * amount) * gpPrice * 10000000)} ${'```'}`)
 
             interaction.reply({ embeds: [error] });
 
