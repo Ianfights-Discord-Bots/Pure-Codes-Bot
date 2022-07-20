@@ -1,4 +1,5 @@
 require("dotenv").config();
+import { ActivityType } from "discord.js";
 import { createButtons } from "./autoPurchase/createButtons";
 import { delPrevCheckouts } from "./autoPurchase/init/delPrevCheckouts";
 import { initCheckouts } from "./autoPurchase/init/initCheckouts";
@@ -15,7 +16,6 @@ export const client = new ExtendedClient();
 
 client.start();
 startJobs();
-client.user.setActivity("Watching monkeys codes!");
 // delPrevCheckouts();
 // createButtons();
 // initCheckouts();
