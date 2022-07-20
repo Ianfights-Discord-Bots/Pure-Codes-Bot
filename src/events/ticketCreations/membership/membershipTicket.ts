@@ -33,7 +33,7 @@ function openTicket(interaction) {
                         .setStyle('DANGER'),
                 )
             //@ts-ignore
-            client.channels.cache.get(m.id).send({ content: `Welcome <@${interaction.user.id}> , thank you for choosing Pure Codes. Please choose the length of membership and payment options and enter below and a member of <@&923825468015276033> will be with you soon`, components: [row] });
+            client.channels.cache.get(m.id).send({ content: `Welcome <@${interaction.user.id}> , thank you for choosing Pure Codes. Please choose the length of membership and payment options and enter below and one of the <@&997585123430113310> will be with you soon`, components: [row] });
 
             const length = new MessageActionRow()
                 .addComponents(

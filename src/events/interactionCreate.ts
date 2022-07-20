@@ -2,6 +2,7 @@ import { CommandInteractionOptionResolver, MessageActionRow, MessageButton, Perm
 import { client } from "..";
 import { Event } from "../lib/structures/Event";
 import { ExtendedInteraction } from "../lib/typings/Command";
+import { click } from "./cryptoClick/click";
 import { openMembershipTicket } from "./ticketCreations/membership/membershipTicket";
 
 export default new Event("interactionCreate", (interaction) => {
@@ -25,6 +26,9 @@ export default new Event("interactionCreate", (interaction) => {
                 break;
             case 'deleteTicket':
                 interaction.channel.delete();
+                break;
+            case 'cryptoBuy':
+                click(interaction);
                 break;
         }
         if (interaction.customId.includes('ticketClose', 0)) {
