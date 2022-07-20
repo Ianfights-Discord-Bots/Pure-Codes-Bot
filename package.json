@@ -7,7 +7,8 @@
         "start:dev": "tsc -w concurrently nodemon --watch dist -e js",
         "start:prod": "node dist/index.js",
         "build": "tsc",
-        "watch": "tsc -w"
+        "watch": "tsc -w",
+        "update": "git pull origin master && tsc && pm2 restart PureCodes"
     },
     "keywords": [],
     "author": "",
