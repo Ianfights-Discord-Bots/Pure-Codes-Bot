@@ -4,36 +4,8 @@ import { readJson } from "../../util/readJson";
 const fs = require("fs");
 const choices = [
     {
-        name: '16 Day',
+        name: '14 Day',
         value: '16'
-    },
-    {
-        name: '24 Day',
-        value: '24'
-    },
-    {
-        name: '40 Day',
-        value: '40'
-    },
-    {
-        name: '48 Day',
-        value: '48'
-    },
-    {
-        name: '72 Day',
-        value: '72'
-    },
-    {
-        name: '96 Day',
-        value: '96'
-    },
-    {
-        name: '144 Day',
-        value: '144'
-    },
-    {
-        name: '292 Day',
-        value: '292'
     },
     {
         name: 'GP',
@@ -46,13 +18,6 @@ export default new Command({
     description: 'Updates the pricing in the database.',
     options:
         [
-            {
-                name: 'option',
-                description: 'The option to change the price for.',
-                type: 'STRING',
-                required: true,
-                choices: choices
-            },
             {
                 name: 'price',
                 description: 'The price to change the specified option to.',
@@ -69,7 +34,7 @@ export default new Command({
             if (err) throw err;
             let codes = iCodes;
             //@ts-ignore
-            const option: string = interaction.options.get('option').value;
+            const option: string = '16'
             //@ts-ignore
             const price: number = interaction.options.get('price').value;
 

@@ -1,14 +1,10 @@
 import { MessageActionRow, MessageButton, MessageEmbed, Permissions } from "discord.js";
-import { Util } from "oldschooljs";
-import { codeLength } from "./paymentMethods";
 import { client } from "../../../index";
-import { readJson } from "../../../util/readJson";
-import { trunc } from "../../../util/trunc";
 let guildId = process.env.guildId;
 
 function openTicket(interaction) {
     try {
-        client.guilds.cache.get(guildId).channels.create(`ticket-${interaction.user.username}`, {
+        client.guilds.cache.get(guildId).channels.create(`vps-ticket-${interaction.user.username}`, {
             type: 'GUILD_TEXT',
             parent: '997585322856681533',
             permissionOverwrites: [
@@ -35,25 +31,26 @@ function openTicket(interaction) {
                         .setLabel('Close Ticket')
                         .setStyle('DANGER'),
                 )
-            //@ts-ignore
-            client.channels.cache.get(m.id).send({ content: `Welcome <@${interaction.user.id}> , thank you for choosing Pure Codes! One of the <@&997585123430113310> will be with you soon`, components: [row] });
 
-
-
-            const invoice = new MessageEmbed()
+                const priceList = new MessageEmbed()
                 .setColor('#46bdf0')
-                .setTitle('Code Prices');
+                .setTitle('VPS Prices')
+                .addField(`**Operating Systems**`,`
 
-            readJson('./codes.json', (err, codes) => {
-                let length = 16
-                let gpPrice = codes.gpPrice
-                let codePrices = codes.prices
-                invoice.addField(`14 Day`, `Crypto $${'```'}${trunc((codePrices[`${length}_day`]))} ${'```'} \nGP ${'```'} ${Util.toKMB(codePrices[`${length}_day`] * gpPrice * 10000000)} ${'```'}`, true)
-                //@ts-ignore
-                client.channels.cache.get(m.id).send({ embeds: [invoice] })
-            })
+                    • Windows 10
+                    • Windows Server:
+                    • 2012
+                    • 2016
+                    • 2019
+                    • 2022`)
+                    .addField(`**Prices*`,``);
 
-            codeLength(interaction, client);
+
+            //@ts-ignore
+            // client.channels.cache.get(m.id).send({content: "```Operating Systems: \nWindows 10 \nWindows Server: \n    2012 \n  2016 \n    2019 \n    2022```"})
+
+            //@ts-ignore
+            client.channels.cache.get(m.id).send({ content: `Welcome <@${interaction.user.id}> , thank you for choosing Chimp's Pure Bot Supplies! Please let an <@&997585123430113310> know what you would like!`, components: [row], embeds: [priceList] });
 
         });
     } catch (e) {
@@ -62,4 +59,4 @@ function openTicket(interaction) {
     }
 }
 
-export { openTicket as openMembershipTicket }
+export { openTicket as openVpsTicket }

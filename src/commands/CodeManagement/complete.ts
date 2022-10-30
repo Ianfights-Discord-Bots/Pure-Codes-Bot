@@ -22,13 +22,6 @@ export default new Command({
             required: true
         },
         {
-            name: 'length',
-            description: 'The length of the codes',
-            type: 'NUMBER',
-            required: true,
-            choices: choices
-        },
-        {
             name: 'amount',
             description: 'The amount of codes the user wishes to buy',
             type: 'INTEGER',
@@ -64,7 +57,7 @@ export default new Command({
             const codes = info.codes.unused;
             let usedCodes = info.codes.used;
             const user = interaction.options.get('user').value;
-            const length = interaction.options.get('length').value;
+            const length = 16
             //@ts-ignore
             const amount: number = interaction.options.get('amount').value - 1;
             console.log(amount)
@@ -79,14 +72,14 @@ export default new Command({
             const noCodesError = new MessageEmbed()
                 .setColor('#ff0011')
                 .setTitle('Error')
-                .setDescription(`Error. There are no more ${length} day codes left`);
+                .setDescription(`Error. There are no more 14 day codes left`);
 
             if (!codes[`${length}_days`][0]) { interaction.reply({ embeds: [noCodesError] }); return; }
 
             const notEnoughCodesError = new MessageEmbed()
                 .setColor('#ff0011')
                 .setTitle('Error')
-                .setDescription(`Error. There are not enough ${length} day codes to fulfill this order. You asked for ${amount} while there are only ${codes[`${length}_days`].length} available.`);
+                .setDescription(`Error. There are not enough 14 day codes to fulfill this order. You asked for ${amount} while there are only ${codes[`${length}_days`].length} available.`);
 
             if (codes[`${length}_days`].length < amount) { interaction.reply({ embeds: [notEnoughCodesError] }); return; }
 
@@ -103,7 +96,7 @@ export default new Command({
                     invoice.setDescription(`Payment Method: **GP**\nPrice${'```'} ${Util.toKMB(((info.prices[`${length}_day`]) / info.gpPrice) * 1000000 * (amount + 1))} GP${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee ${'```'} ${handlingTransactionUsername} ${'```'}`)
                     break;
                 case 'giveaway':
-                    invoice.setDescription(`Congrats! You have won a giveaway for a ${length} day code. \n`)
+                    invoice.setDescription(`Congrats! You have won a giveaway for a 14 day code. \n`)
                     break;
             }
 
@@ -123,7 +116,7 @@ export default new Command({
 
                 codesForUser.push(usedCode)
             }
-            invoice.addField('Code Length', `${'```'}${length} days${'```'}`);
+            invoice.addField('Code Length', `${'```'}14 days${'```'}`);
             codesForUser.map((data) => {
                 invoice.addField('Code Value', `${'```'}${data}${'```'}`);
 

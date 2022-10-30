@@ -12,13 +12,6 @@ export default new Command({
     description: 'Adds codes to the database',
     options: [
         {
-            name: 'length',
-            description: 'The length of the code.',
-            type: 'INTEGER',
-            required: true,
-            choices: choices
-        },
-        {
             name: 'code-value',
             description: 'The actual code that the user needs.',
             type: 'STRING',
@@ -34,33 +27,12 @@ export default new Command({
         readJson('./codes.json', (err, iCodes) => {
             let codes = iCodes.codes.unused;
 
-            const length = interaction.options.get('length').value;
+            const length = 16
             let codeData = interaction.options.get('code-value').value;
 
             switch (length) {
                 case 16:
                     codes['16_days'].push(codeData)
-                    break;
-                case 24:
-                    codes['24_days'].push(codeData)
-                    break;
-                case 40:
-                    codes['40_days'].push(codeData)
-                    break;
-                case 48:
-                    codes['48_days'].push(codeData)
-                    break;
-                case 72:
-                    codes['72_days'].push(codeData)
-                    break;
-                case 96:
-                    codes['96_days'].push(codeData)
-                    break;
-                case 144:
-                    codes['144_days'].push(codeData)
-                    break;
-                case 292:
-                    codes['292_days'].push(codeData)
                     break;
             }
 
