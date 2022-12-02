@@ -20,7 +20,7 @@ export default new Command({
                 .setTitle('Code Prices');
 
 
-            invoice.addField(`14 Day`, `Crypto $${'```'}${trunc((codePrices[`${codeLength}_day`]))} ${'```'} \nGP ${'```'} ${Util.toKMB(codePrices[`${codeLength}_day`] * gpPrice * 10000000)} ${'```'}`, true)
+            invoice.addField(`14 Day`, `Crypto $${'```'}${trunc((codePrices[`${codeLength}_day`]))} ${'```'}`)
 
 
             // .addField('16 Day', `Crypto $${'```'}${trunc(codePrices[`${codeLengths[i]}_day`] / 2.5)} ${'```'} \nGP ${'```'} ${Util.toKMB(codePrices[`${codeLengths[i]}_day`] / gpPrice * 1000000 / 2.5)} ${'```'} \nCashApp/PayPal  $${'```'} ${trunc(codePrices[`${codeLengths[i]}_day`] * cashAppMultiplier / 2.5)} ${'```'}`, true)

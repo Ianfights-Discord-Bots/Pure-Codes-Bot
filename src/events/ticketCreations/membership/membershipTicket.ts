@@ -48,7 +48,11 @@ function openTicket(interaction) {
                 let length = 16
                 let gpPrice = codes.gpPrice
                 let codePrices = codes.prices
-                invoice.addField(`14 Day`, `Crypto $${'```'}${trunc((codePrices[`${length}_day`]))} ${'```'} \nGP ${'```'} ${Util.toKMB(codePrices[`${length}_day`] * gpPrice * 10000000)} ${'```'}`, true)
+                invoice.addField(`14 Day`, `Crypto $${'```'}${trunc((codePrices[`${length}_day`]))} ${'```'}`);
+                invoice.addField(`<:BTC:1048041691002716301> Bitcoin`,`${'```'}${codes.paymentMethods.btcAdress}${'```'}`);
+                invoice.addField(`<:LTC:1048042360929517568> Litecoin`,`${'```'}${codes.paymentMethods.ltcAddress}${'```'}`);
+                invoice.addField(`<:ETH:1048042120889507940> Ethereum`,`${'```'}${codes.paymentMethods.ethAddress}${'```'}`);
+                invoice.addField(`<:USDT:1048041928916221952> Tether`,`${'```'}${codes.paymentMethods.usdtAddress}${'```'}`);
                 //@ts-ignore
                 client.channels.cache.get(m.id).send({ embeds: [invoice] })
             })
