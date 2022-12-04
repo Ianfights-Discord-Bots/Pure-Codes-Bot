@@ -20,7 +20,6 @@ export const addBulk = (interaction) => {
             }
 
 
-            interaction.reply({ content: `Sucessfully added ${modalCodes.length} new codes to the database!`, ephemeral: true })
 
 
         }
@@ -31,5 +30,7 @@ export const addBulk = (interaction) => {
         finalCodes = JSON.stringify(finalCodes);
         prettier.format(finalCodes, { parser: "json" })
         fs.writeFileSync('./codes.json', finalCodes);
+        interaction.reply({ content: `Sucessfully added ${modalCodes.length} new codes to the database!`, ephemeral: true })
+
     });
 } 
