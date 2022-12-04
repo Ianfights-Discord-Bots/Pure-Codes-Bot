@@ -1,4 +1,4 @@
-import { CommandInteractionOptionResolver, MessageActionRow, MessageButton, Permissions } from "discord.js";
+import { CommandInteractionOptionResolver, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } from "discord.js";
 import { client } from "..";
 import { Event } from "../lib/structures/Event";
 import { ExtendedInteraction } from "../lib/typings/Command";
@@ -18,12 +18,18 @@ export default new Event("interactionCreate", (interaction) => {
             client,
             interaction: interaction as ExtendedInteraction
         });
-    } else if (interaction.isButton()) {
+    } else if (interaction.isButton() || interaction.isAnySelectMenu()) {
         //@ts-ignore
         switch (interaction.customId) {
-            case 'membershipTicketCreate':
-                openMembershipTicket(interaction);
+            case 'ticketSelect':
+                //@ts-ignore
+                switch(interaction.values[0]){
+                    case 'membershipCodes':
+                        openMembershipTicket(interaction)
+                        break;
+                }
                 break;
+
             case 'deleteTicket':
                 interaction.channel.delete();
                 break;
@@ -37,7 +43,7 @@ export default new Event("interactionCreate", (interaction) => {
             interaction.channel.permissionOverwrites.set([
                 {
                     id: process.env.guildId,
-                    deny: [Permissions.FLAGS.VIEW_CHANNEL],
+                    deny: [PermissionFlagsBits.ViewChannel],
                 },
                 // {
                 //     id: hostId,
@@ -53,12 +59,12 @@ export default new Event("interactionCreate", (interaction) => {
             //@ts-ignore
             interaction.channel.setName(`closedTicket_${user}`)
 
-            const row = new MessageActionRow()
+            const row = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId('deleteTicket')
                         .setLabel('Delete Ticket')
-                        .setStyle('DANGER'),
+                        .setStyle(ButtonStyle.Danger),
                 );
             //@ts-ignore
             client.channels.cache.get(interaction.channel.id).send({ content: 'Click the button below to delete this ticket', components: [row] });

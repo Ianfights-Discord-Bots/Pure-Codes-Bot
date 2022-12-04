@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { Command } from "../../lib/structures/Command";
 import { choices } from "../../util/choices";
 import { readJson } from "../../util/readJson";
@@ -15,12 +15,12 @@ export default new Command({
         readJson('./codes.json', (err, info) => {
             const codePrices = info.prices;
             const gpPrice = info.gpPrice
-            const invoice = new MessageEmbed()
+            const invoice = new EmbedBuilder()
                 .setColor('#46bdf0')
                 .setTitle('Code Prices');
 
 
-            invoice.addField(`14 Day`, `Crypto $${'```'}${trunc((codePrices[`${codeLength}_day`]))} ${'```'}`)
+            invoice.addFields({ name: `14 Day`, value: `Crypto $${'```'}${trunc((codePrices[`${codeLength}_day`]))} ${'```'}` });
 
 
             // .addField('16 Day', `Crypto $${'```'}${trunc(codePrices[`${codeLengths[i]}_day`] / 2.5)} ${'```'} \nGP ${'```'} ${Util.toKMB(codePrices[`${codeLengths[i]}_day`] / gpPrice * 1000000 / 2.5)} ${'```'} \nCashApp/PayPal  $${'```'} ${trunc(codePrices[`${codeLengths[i]}_day`] * cashAppMultiplier / 2.5)} ${'```'}`, true)

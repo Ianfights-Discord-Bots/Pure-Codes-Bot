@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { Command } from "../../lib/structures/Command";
 import { readJson } from "../../util/readJson";
 
@@ -9,7 +9,7 @@ export default new Command({
         readJson('./codes.json', (err, iCodes) => {
             let codes = iCodes.codes.unused;
 
-            const error = new MessageEmbed()
+            const error = new EmbedBuilder()
                 .setColor('#46bdf0')
                 .setTitle('Stock')
                 .setDescription(`14 Day: **${codes['16_days'].length}**`)

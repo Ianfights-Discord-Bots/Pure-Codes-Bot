@@ -1,6 +1,5 @@
 require("dotenv").config();
 import { ActivityType } from "discord.js";
-import { createButtons } from "./autoPurchase/createButtons";
 import { delPrevCheckouts } from "./autoPurchase/init/delPrevCheckouts";
 import { initCheckouts } from "./autoPurchase/init/initCheckouts";
 import { startJobs } from "./lib/startJobs";

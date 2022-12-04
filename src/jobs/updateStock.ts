@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder  } from 'discord.js';
 import { client } from '..';
 import * as fs from 'fs';
 import { readJson } from '../util/readJson';
@@ -17,7 +17,7 @@ const updateStock = async () => {
             //@ts-ignore
             const previousMessage = await channel.messages.fetch(previousMessageId);
 
-            const stock = new MessageEmbed()
+            const stock = new EmbedBuilder()
                 .setColor('#46bdf0')
                 .setTitle('Stock')
                 .setDescription(`14 Day: **${codes['16_days'].length}**`);             //@ts-ignore

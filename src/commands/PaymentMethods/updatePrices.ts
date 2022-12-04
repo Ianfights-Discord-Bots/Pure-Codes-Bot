@@ -1,4 +1,4 @@
-import { Permissions } from "discord.js";
+import { Permissions, ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
 import { Command } from "../../lib/structures/Command";
 import { readJson } from "../../util/readJson";
 const fs = require("fs");
@@ -21,12 +21,12 @@ export default new Command({
             {
                 name: 'price',
                 description: 'The price to change the specified option to.',
-                type: 'NUMBER',
+                type: ApplicationCommandOptionType.Number,
                 required: true
             }
         ],
     run: ({ interaction }) => {
-        if (!interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
             interaction.reply({ content: "Error! Only erver owners may run this command!", ephemeral: true })
             return;
         }

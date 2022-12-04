@@ -1,4 +1,4 @@
-import { MessageEmbed, Permissions } from "discord.js";
+import { EmbedBuilder, Permissions, ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
 import { Util } from "oldschooljs";
 import { client } from "../..";
 import { Command } from "../../lib/structures/Command";
@@ -18,19 +18,19 @@ export default new Command({
         {
             name: 'user',
             description: 'The user who purchased the codes',
-            type: 'USER',
+            type: ApplicationCommandOptionType.User,
             required: true
         },
         {
             name: 'amount',
             description: 'The amount of codes the user wishes to buy',
-            type: 'INTEGER',
+            type: ApplicationCommandOptionType.Integer,
             required: true
         },
         {
             name: 'payment-method',
             description: 'The payment method the user is using',
-            type: 'STRING',
+            type: ApplicationCommandOptionType.String,
             choices: [
                 {
                     name: 'Crypto',
@@ -49,7 +49,7 @@ export default new Command({
         },
     ],
     run: ({ interaction }) => {
-        if (!interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
             interaction.reply({ content: "Error! Only server owners may run this command!", ephemeral: true })
             return;
         }
@@ -69,14 +69,14 @@ export default new Command({
             const handlingTransactionUsername = interaction.user.username;
 
 
-            const noCodesError = new MessageEmbed()
+            const noCodesError = new EmbedBuilder()
                 .setColor('#ff0011')
                 .setTitle('Error')
                 .setDescription(`Error. There are no more 14 day codes left`);
 
             if (!codes[`${length}_days`][0]) { interaction.reply({ embeds: [noCodesError] }); return; }
 
-            const notEnoughCodesError = new MessageEmbed()
+            const notEnoughCodesError = new EmbedBuilder()
                 .setColor('#ff0011')
                 .setTitle('Error')
                 .setDescription(`Error. There are not enough 14 day codes to fulfill this order. You asked for ${amount} while there are only ${codes[`${length}_days`].length} available.`);
@@ -84,7 +84,7 @@ export default new Command({
             if (codes[`${length}_days`].length < amount) { interaction.reply({ embeds: [notEnoughCodesError] }); return; }
 
 
-            const invoice = new MessageEmbed()
+            const invoice = new EmbedBuilder()
                 .setColor('#46bdf0')
                 .setTitle('Purchase Info');
 
@@ -93,7 +93,7 @@ export default new Command({
                     invoice.setDescription(`Payment Method: **Crypto**\nPrice ${'```'}$${trunc((info.prices[`${length}_day`])) * (amount + 1)}${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee ${'```'} ${handlingTransactionUsername} ${'```'}`)
                     break;
                 case 'gp':
-                    invoice.setDescription(`Payment Method: **GP**\nPrice${'```'} ${Util.toKMB(((info.prices[`${length}_day`]) / info.gpPrice) * 1000000 * (amount + 1))} GP${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee ${'```'} ${handlingTransactionUsername} ${'```'}`)
+                    invoice.setDescription(`Payment Method: **GP**\nPrice${'```'} ${Util.toKMB(((info.prices[`${length}_day`]) / info.gpPrice) * 1000000 * (amount + 1))} GP${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee ${'```'}${handlingTransactionUsername} ${'```'}`)
                     break;
                 case 'giveaway':
                     invoice.setDescription(`Congrats! You have won a giveaway for a 14 day code. \n`)
@@ -116,9 +116,9 @@ export default new Command({
 
                 codesForUser.push(usedCode)
             }
-            invoice.addField('Code Length', `${'```'}14 days${'```'}`);
+            invoice.addFields({ name: 'Code Length', value: `${'```'}14 days${'```'}` });
             codesForUser.map((data) => {
-                invoice.addField('Code Value', `${'```'}${data}${'```'}`);
+                invoice.addFields({ name: 'Code Value', value: `${'```'}${data}${'```'}` });
 
             });
 
@@ -128,7 +128,7 @@ export default new Command({
 
             interactionAuthor.send({ embeds: [invoice] })
             clientUser.send({ embeds: [invoice] })
-
+            clientUser.send(`To redeem your code, please go to https://www.runescape.com/store_locator and press "Activate Card". \nYou will be redirected to Runescape Login page, enter your credentials.\nYou'll be seeing something like "Redeem a Pre-Paid Card", just enter the code you received and that's it.`)
             //Send it to Geek
             // interaction.guild.members.fetch(geekUserId).send({ embeds: [invoice] });
             //@ts-ignore
@@ -140,7 +140,7 @@ export default new Command({
 
 
             //@ts-ignore
-            interaction.reply(`Thank you <@${user}> for purchasing from us. If you could leave us some <#997580908896997447>. If you have any questions about the code please message any of the <@&997585123430113310> for help. We look forward to welcoming you again soon.\nYou order receipt along with the membership codes will be sent via DM to you now.\nTo redeem your code, please go to https://www.runescape.com/store_locator and press "Activate Card". \nYou will be redirected to Runescape Login page, enter your credentials.\nYou'll be seeing something like "Redeem a Pre-Paid Card", just enter the code you received and that's it.`);
+            interaction.reply(`Thank you <@${user}> for purchasing from us. If you could leave us some <#997580908896997447> and on [Our Sythe](https://www.sythe.org/threads/chimps-accounts-services-vouches). If you have any questions about the code please message any of the <@&997585123430113310> for help. We look forward to welcoming you again soon.\nYou order receipt along with the membership codes will be sent via DM to you now.`);
 
 
             let finalCodes = info;
