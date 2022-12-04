@@ -45,4 +45,4 @@ function openTicket(interaction) {
     }
 }
 
-export { openTicket as openGoldTicket }
+export { openTicket as openAccTicket }

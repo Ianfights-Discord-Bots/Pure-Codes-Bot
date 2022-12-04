@@ -3,6 +3,8 @@ import { client } from "..";
 import { Event } from "../lib/structures/Event";
 import { ExtendedInteraction } from "../lib/typings/Command";
 import { click } from "./cryptoClick/click";
+import { openAccTicket } from "./ticketCreations/account/accTicket";
+import { openGoldTicket } from "./ticketCreations/gold/goldTicket";
 import { openMembershipTicket } from "./ticketCreations/membership/membershipTicket";
 
 export default new Event("interactionCreate", (interaction) => {
@@ -18,7 +20,7 @@ export default new Event("interactionCreate", (interaction) => {
             client,
             interaction: interaction as ExtendedInteraction
         });
-    } else if (interaction.isButton() || interaction.isAnySelectMenu()) {
+    } else if (interaction.isButton() || interaction.isAnySelectMenu() || interaction.isModalSubmit()) {
         //@ts-ignore
         switch (interaction.customId) {
             case 'ticketSelect':
@@ -27,15 +29,21 @@ export default new Event("interactionCreate", (interaction) => {
                     case 'membershipCodes':
                         openMembershipTicket(interaction)
                         break;
+                    case 'accounts':
+                        openAccTicket(interaction)
+                        break;
+                    case 'gold':
+                        openGoldTicket(interaction);
+                        break;
                 }
                 break;
-
             case 'deleteTicket':
                 interaction.channel.delete();
                 break;
-            case 'cryptoBuy':
-                click(interaction);
+            case 'bulkAdd':
+                
                 break;
+
         }
         if (interaction.customId.includes('ticketClose', 0)) {
             let user = interaction.customId.replace('ticketClose_', '');
