@@ -1,26 +1,40 @@
-export const createInvoice = (businessName: string, customerEmail: string, customerName: string, memo: string, localPrice: { amount: number, currency: 'USD' | 'EUR' | 'GBP' }, apiKey: string) => {
-    const fetch = require('node-fetch');
+import axios from "axios";
 
-    const url = 'https://api.commerce.coinbase.com/invoices';
-    const options = {
-        method: 'POST',
+export const createInvoice = async (
+    customerEmail: string,
+    customerName: string,
+    memo: string,
+    localPrice: { amount: number, currency: 'USD' | 'EUR' | 'GBP' },
+    apiKey: string,
+    interaction?
+) => {
+    const data = JSON.stringify({
+        local_price: localPrice,
+        business_name: `Chimp's Accounts & Membership`,
+        customer_email: `${customerEmail}`,
+        customer_name: `${customerName}`,
+        memo: `${memo}`
+    });
+
+    let config = {
+        method: 'post',
+        url: 'https://api.commerce.coinbase.com/invoices',
         headers: {
-            accept: 'application/json',
-            'X-CC-Api-Key': apiKey, 
-            'X-CC-Version': '2018-03-22',
-            'content-type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CC-Api-Key': apiKey
         },
-        body: JSON.stringify({
-            local_price: localPrice,
-            business_name: `${businessName}`,
-            customer_email: `${customerEmail}`,
-            customer_name: `${customerName}`,
-            memo: `${memo}`
-        })
+        data: data
     };
 
-    fetch(url, options)
-        .then(res => res.json())
-        .then(json => console.log(json))
-        .catch(err => console.error('error:' + err));
+    axios(config)
+        .then(async (response) => {
+            console.log(response.data.data.code);
+            if(interaction){
+                interaction.reply(`Your invoice has been created! Please go to https://commerce.coinbase.com/invoices/${response.data.data.code} to pay!`)
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }

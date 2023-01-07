@@ -2,6 +2,7 @@ require("dotenv").config();
 import { ActivityType } from "discord.js";
 import { delPrevCheckouts } from "./autoPurchase/init/delPrevCheckouts";
 import { initCheckouts } from "./autoPurchase/init/initCheckouts";
+import { initServer } from "./autoPurchase/webhooks/initServer";
 import { startJobs } from "./lib/startJobs";
 import { ExtendedClient } from "./lib/structures/Client";
 
@@ -15,6 +16,7 @@ export const client = new ExtendedClient();
 
 client.start();
 startJobs();
+initServer();
 // delPrevCheckouts();
 // createButtons();
 // initCheckouts();
