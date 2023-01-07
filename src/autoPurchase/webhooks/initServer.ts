@@ -10,7 +10,7 @@ export const initServer = () => {
     sgMail.setApiKey('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')
 
 
-    var webhookSecret = 'eaf33f0e-28a3-4d48-bd8f-6a32551f7efd';
+    var webhookSecret = '2bb5e0f7-e6e7-4cd5-90e2-cbd03e357379';
     var router = Express.Router();
     var app = Express();
 
