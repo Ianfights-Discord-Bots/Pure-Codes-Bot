@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 interface Codes{
     codeValue: String,
-    unclaimed?: Boolean
+    claimed?: Boolean
     pricePurchased: Number
 }
 
@@ -13,9 +13,9 @@ const codes = new Schema<Codes>(
             required: true
         },
 
-        unclaimed: {
+        claimed: {
             type: Boolean,
-            default: true,
+            default: false,
             required: true
         },
 
