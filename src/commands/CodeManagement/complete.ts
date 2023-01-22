@@ -90,7 +90,7 @@ export default new Command({
 
             switch (paymentMethod) {
                 case 'crypto':
-                    invoice.setDescription(`Payment Method: **Crypto**\nPrice ${'```'}$${trunc((info.prices[`${length}_day`])) * (amount + 1)}${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee ${'```'} ${handlingTransactionUsername} ${'```'}`)
+                    invoice.setDescription(`Payment Method: **Crypto**\nPrice ${'```'}$${trunc((info.prices[`${length}_day`])) * (amount + 1)}${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee${'```'}${handlingTransactionUsername} ${'```'}`)
                     break;
                 case 'gp':
                     invoice.setDescription(`Payment Method: **GP**\nPrice${'```'} ${Util.toKMB(((info.prices[`${length}_day`]) / info.gpPrice) * 1000000 * (amount + 1))} GP${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee ${'```'}${handlingTransactionUsername} ${'```'}`)
