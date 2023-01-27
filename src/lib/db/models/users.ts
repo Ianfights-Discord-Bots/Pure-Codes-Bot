@@ -27,7 +27,7 @@ const users = new Schema<user>(
             required: true
         },
         purchases: {
-            type: Array<purchase>,
+            type: Array,
             reqired: true
         }
     },

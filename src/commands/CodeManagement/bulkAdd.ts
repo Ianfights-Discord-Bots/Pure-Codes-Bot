@@ -17,15 +17,29 @@ export default new Command({
 
         const codeInput = new TextInputBuilder()
             .setCustomId('codes')
-            // The label is the prompt the user sees for this input
             .setLabel("Input each code on a new line")
-            // Short means only a single line of text
             .setStyle(TextInputStyle.Paragraph)
             .setRequired(true);
 
+            const priceInput = new TextInputBuilder()
+            .setCustomId('price-per-code')
+            .setLabel("Average price paid in M")
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true);
+
+            const gpPrice = new TextInputBuilder()
+            .setCustomId('gp-price')
+            .setLabel("Please the current gold price")
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true);
+
         const firstActionRow = new ActionRowBuilder().addComponents(codeInput);
+        const se = new ActionRowBuilder().addComponents(priceInput);
+        const th = new ActionRowBuilder().addComponents(gpPrice);
+
+
         //@ts-ignore
-        modal.addComponents(firstActionRow);
+        modal.addComponents(firstActionRow,se,th);
         interaction.showModal(modal);
 
     }

@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType, PermissionFlagsBits, Permissions } from "
 import { Command } from "../../lib/structures/Command";
 import { choices } from "../../util/choices";
 import { readJson } from "../../util/readJson";
+import { addCodes } from "../../lib/db/codeManagement/addCode";
 // ADMIN ONLY
 
 const prettier = require("prettier");
@@ -16,6 +17,18 @@ export default new Command({
             description: 'The actual code that the user needs.',
             type: ApplicationCommandOptionType.String,
             required:true
+        },
+        {
+            name: 'price-purchased',
+            description: 'The price the code was purchased for in GP',
+            type: ApplicationCommandOptionType.String,
+            required:true
+        },
+        {
+            name: 'gp-rate',
+            description: 'The price paid for the gp in $/M',
+            type: ApplicationCommandOptionType.String,
+            required:true
         }
     ],
     run: ({ interaction }) => {
@@ -24,27 +37,16 @@ export default new Command({
             return;
         }
 
-        readJson('./codes.json', (err, iCodes) => {
-            let codes = iCodes.codes.unused;
+        const codeData = interaction.options.get('code-value').value;
+        const pricePurchased = interaction.options.get('price-purchased').value;
+        const gpRate = interaction.options.get('gp-rate').value;
 
-            const length = 16
-            let codeData = interaction.options.get('code-value').value;
-
-            switch (length) {
-                case 16:
-                    codes['16_days'].push(codeData)
-                    break;
-            }
-
-            let finalCodes = iCodes;
-            delete finalCodes.codes.unused;
-            finalCodes.codes.unused = codes
-            finalCodes = JSON.stringify(finalCodes);
-
-            prettier.format(finalCodes, { parser: "json" })
-            fs.writeFileSync('./codes.json', finalCodes);
-
-            interaction.reply({content: 'Sucessfully added a new code to the database!', ephemeral: true})
-        });
+        try{
+        //@ts-ignore
+        addCodes(codeData, pricePurchased, gpRate);
+        } catch (err) {
+            interaction.reply({content: "An Error occured! Please try again!", ephemeral: true})
+        }
+        
     }
 })
