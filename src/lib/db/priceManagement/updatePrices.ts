@@ -1,14 +1,14 @@
-import { Config } from "../models/config";
+import { Prices } from "../models/prices";
 
-export const updateStockId = async (newStockId: string) => {
+export const updatePrices = async (price: number) => {
     const serverId = process.env.guildId
-    const oldConfig = Config.findOne({ serverId: serverId });
+    const oldConfig = Prices.findOne({ serverId: serverId });
     if (!await oldConfig) {
         // Server is not in the config so add them with their settings
 
-        const newConfig = new Config({
+        const newConfig = new Prices({
             serverId: serverId,
-            lastStockId: newStockId
+            price: price
         });
 
         newConfig.save().catch(err => console.log(err));
@@ -16,7 +16,7 @@ export const updateStockId = async (newStockId: string) => {
     }
 
     // Server exists in the config 
-    Config.updateOne({ serverId: serverId }, { lastStockId: newStockId }, (err) => {
+    Prices.updateOne({ serverId: serverId }, { price: price }, (err) => {
         if (err) throw err;
     });
 }

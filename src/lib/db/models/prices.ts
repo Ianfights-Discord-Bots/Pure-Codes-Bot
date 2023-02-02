@@ -2,20 +2,21 @@ import { Schema, model } from "mongoose";
 
 
 
-const config = new Schema(
+const prices = new Schema(
     {
         serverId: {
             type: String,
             required: true
         },
-        lastStockId: {
-            type: String,
+        price: {
+            type: Number,
             required: true
-        },   
+        },
+        
     },
     { timestamps: true }
 );
 
-const Config = model("config", config);
+const Prices = model("prices", prices);
 
-export { Config as Config };
+export { Prices as Prices };
