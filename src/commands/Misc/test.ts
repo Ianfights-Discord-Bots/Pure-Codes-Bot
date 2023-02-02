@@ -5,12 +5,14 @@ import { removeCode } from "../../lib/db/codeManagement/removeCode";
 export default new Command({
     name: 'tst',
     description: 'test',
-    run: ({ interaction }) => {
+    run: async ({ interaction }) => {
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
             interaction.reply({ content: "Error! Only server owners may run this command!", ephemeral: true })
             return;
         }
 
-        removeCode(5)
-    }
+
+        const codes = await removeCode(3);
+        console.log(await codes)
+}
 })

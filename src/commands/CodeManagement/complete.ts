@@ -129,11 +129,8 @@ export default new Command({
             interactionAuthor.send({ embeds: [invoice] })
             clientUser.send({ embeds: [invoice] })
             clientUser.send(`To redeem your code, please go to https://www.runescape.com/store_locator and press "Activate Card". \nYou will be redirected to Runescape Login page, enter your credentials.\nYou'll be seeing something like "Redeem a Pre-Paid Card", just enter the code you received and that's it.`)
-            //Send it to Geek
-            // interaction.guild.members.fetch(geekUserId).send({ embeds: [invoice] });
+
             //@ts-ignore
-            // let geek = await client.guilds.cache.get(guildId).members.fetch(geekUserId)
-            // geek.send({ embeds: [invoice] })
 
             // Send it to the receipts channel
             interaction.guild.channels.cache.get('997648000631439472').send({ embeds: [invoice] })
