@@ -1,13 +1,6 @@
 import { Schema, model } from "mongoose";
 
-interface purchase {
-    purchaseType: 'Code' | 'Account' | 'Gold' | 'Other',
-    quantity: number,
-    pricePerUnit: number,
-    totalPurchaseAmount: number,
-    employee: string,
-    date: Date
-}
+
 
 interface user {
     userId: string,

@@ -1,18 +1,14 @@
 import { EmbedBuilder, Permissions, ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
-import { Util } from "oldschooljs";
 import { client } from "../..";
 import { Command } from "../../lib/structures/Command";
-import { choices } from "../../util/choices";
 import { log } from "../../util/log";
-import { readJson } from "../../util/readJson";
 import { trunc } from "../../util/trunc";
 import { getStock } from "../../lib/db/codeManagement/getStock";
 import { getPrice } from "../../lib/db/priceManagement/getPrice";
 import { removeCode } from "../../lib/db/codeManagement/removeCode";
+import { updateUser } from "../../lib/db/userManagement/updateUsers";
 
 // ADMIN ONLY
-const prettier = require("prettier");
-const fs = require("fs");
 
 export default new Command({
     name: 'complete',
@@ -91,7 +87,7 @@ export default new Command({
 
         switch (paymentMethod) {
             case 'cash':                                                            //@ts-ignore
-                invoice.setDescription(`Payment Method: **Cash**\nPrice ${'```'}$${trunc((await getPrice())) * (amount + 1)}${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee${'```'}${handlingTransactionUsername} ${'```'}`)
+                invoice.setDescription(`Payment Method: **Cash**\nPrice ${'```'}$${trunc((await getPrice())) * (amount)}${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee${'```'}${handlingTransactionUsername} ${'```'}`)
                 break;
             case 'giveaway':
                 invoice.setDescription(`Congrats! You have won a giveaway for a 14 day code. \n`)
@@ -126,9 +122,11 @@ export default new Command({
 
         interaction.reply(`Thank you <@${user}> for purchasing from us. If you could leave us some <#997580908896997447> and on [Our Sythe](https://www.sythe.org/threads/chimps-accounts-services-vouches). If you have any questions about the code please message any of the <@&997585123430113310> for help. We look forward to welcoming you again soon.\nYou order receipt along with the membership codes will be sent via DM to you now.`);
 
-        // const now = new Date();
+        const now = new Date();
         // log(`Employee Username: ${interactionAuthor.username}#${interactionAuthor.discriminator}\nCustomer Username: ${clientUsername}#${clientUser.discriminator}\nUUID: ${clientUser.id}\nCode: ${usedCode}\nLength: ${length}\nDate: ${now}\nCrypto Price: ${trunc(info.prices[`${length}_day`])}\nMethod: ${paymentMethod}\n\n`)
 
+        //@ts-ignore
+        updateUser(user, {purchaseType: 'Code', quantity: amount, pricePerUnit: await getPrice(), totalPurchaseAmount: await getPrice() * amount, employee: interactionAuthor.id, now})
 
     }
 })
