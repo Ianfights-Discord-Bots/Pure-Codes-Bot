@@ -26,7 +26,9 @@ export const updateUser = async (userId: string, transaction:purchase) => {
     }
 
 let bal = await oldConfig.totalSpent + transaction.totalPurchaseAmount
-let txs = await oldConfig.purchases.push(transaction)
+let txs = await oldConfig.purchases
+console.log(txs)
+txs.push(transaction)
 console.log(txs)
     // Server exists in the config 
     Users.updateOne({ userId: userId }, {totalSpent: bal, purchases: txs  }, (err) => {
