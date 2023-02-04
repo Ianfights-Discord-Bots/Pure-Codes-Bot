@@ -2,8 +2,9 @@ import { Schema, model } from "mongoose";
 
 interface Codes{
     codeValue: String,
-    unclaimed?: Boolean
-    pricePurchased: Number
+    claimed?: Boolean
+    pricePurchased: Number,
+    gpRate: Number
 }
 
 const codes = new Schema<Codes>(
@@ -13,15 +14,20 @@ const codes = new Schema<Codes>(
             required: true
         },
 
-        unclaimed: {
+        claimed: {
             type: Boolean,
-            default: true,
+            default: false,
             required: true
         },
 
         pricePurchased: {
             type: Number,
             reqired: true
+        },
+        
+        gpRate: {
+            type: Number,
+            required: true
         }
     },
     { timestamps: true }

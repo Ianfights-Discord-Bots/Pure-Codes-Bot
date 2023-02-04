@@ -1,38 +1,36 @@
-import { EmbedBuilder  } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { client } from '..';
 import * as fs from 'fs';
-import { readJson } from '../util/readJson';
-
+import { getStock } from '../lib/db/codeManagement/getStock';
+import { getLastId } from '../lib/db/configManagement/getPreviousMessageId';
+import { updateStockId } from '../lib/db/configManagement/updateStockId';
 
 const channelId = process.env.channelId;
 
 const updateStock = async () => {
-    readJson('./config.json', (err, info) => {
-        readJson('./codes.json', async (err, iCodes) => {
-            let codes = iCodes.codes.unused;
 
-            const previousMessageId = info['last-stock-id'];
 
-            const channel = await client.channels.cache.get(channelId)
-            //@ts-ignore
-            const previousMessage = await channel.messages.fetch(previousMessageId);
+    const channel = await client.channels.cache.get(channelId)
 
-            const stock = new EmbedBuilder()
-                .setColor('#46bdf0')
-                .setTitle('Stock')
-                .setDescription(`14 Day: **${codes['16_days'].length}**`);             //@ts-ignore
-            let newId = await channel.send({ embeds: [stock], content:`If a specific code is out of stock you will still be able to get it, however it will take more time.\nInterested in any codes? Make a ticket!`});
-            newId = await newId.id
+    const stock = new EmbedBuilder()
+        .setColor('#46bdf0')
+        .setTitle('Stock')
+        .setDescription(`14 Day: **${await getStock()}**`);             //@ts-ignore
+    let newId = await channel.send({ embeds: [stock], content: `If a specific code is out of stock you will still be able to get it, however it will take more time.\nInterested in any codes? Make a ticket!` });
+    newId = await newId.id
+    const previousMessageId = await getLastId();
 
-            await previousMessage.delete()
+    if (previousMessageId) {
+        //@ts-ignore
+        const previousMessage = await channel.messages.fetch(previousMessageId);
 
-            let updatedMessage = info;
-            updatedMessage['last-stock-id'] = await newId;
-            updatedMessage = JSON.stringify(updatedMessage);
+        await previousMessage.delete()
+    }
+    // await newId;
 
-            fs.writeFileSync('./config.json', updatedMessage)
-        });
-    });
+    updateStockId(await newId)
+
+
 }
 
 export { updateStock as updateStock }

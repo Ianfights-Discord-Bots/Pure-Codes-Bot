@@ -1,19 +1,25 @@
 import { Schema, model } from "mongoose";
 
-const users = new Schema(
+
+
+interface user {
+    userId: string,
+    totalSpent: number,
+    purchases: any
+}
+
+const users = new Schema<user>(
     {
         userId: {
             type: String,
             required: true
         },
 
-        amountSpent: {
+        totalSpent: {
             type: Number,
             required: true
         },
-
-        codesPurchased: {
-            // [{codeValue: "A7BW-AJKD-ASDKJH-ALSDKJ", date: JSDateObject}]
+        purchases: {
             type: Array,
             reqired: true
         }

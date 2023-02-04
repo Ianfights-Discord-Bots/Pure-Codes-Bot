@@ -1,36 +1,19 @@
 import { readJson } from "../../../util/readJson";
 import * as prettier from 'prettier';
 import * as fs from 'fs'
+import { addCodes } from "../../../lib/db/codeManagement/addCode";
 
 export const addBulk = (interaction) => {
     //@ts-ignore
     const modalCodes = interaction.fields.fields.get('codes').value.split('\n');
-    readJson('./codes.json', (err, iCodes) => {
-        let codes = iCodes.codes.unused;
-        for (let i in modalCodes) {
+    const pricePaid = interaction.fields.fields.get('price-per-code').value;
+    const gpPrice = interaction.fields.fields.get('gp-price').value;
 
-            console.log(modalCodes[i])
-            const length = 16
-            let codeData = modalCodes[i];
+    for (let i in modalCodes) {
+        addCodes(modalCodes[i], pricePaid, gpPrice)
+    }
 
-            switch (length) {
-                case 16:
-                    codes['16_days'].push(codeData)
-                    break;
-            }
+    interaction.reply({ content: `Sucessfully added ${modalCodes.length} new codes to the database!`, ephemeral: true })
 
 
-
-
-        }
-        let finalCodes = iCodes;
-
-        delete finalCodes.codes.unused;
-        finalCodes.codes.unused = codes
-        finalCodes = JSON.stringify(finalCodes);
-        prettier.format(finalCodes, { parser: "json" })
-        fs.writeFileSync('./codes.json', finalCodes);
-        interaction.reply({ content: `Sucessfully added ${modalCodes.length} new codes to the database!`, ephemeral: true })
-
-    });
 } 
