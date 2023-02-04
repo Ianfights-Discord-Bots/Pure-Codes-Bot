@@ -7,6 +7,7 @@ import { getStock } from "../../lib/db/codeManagement/getStock";
 import { getPrice } from "../../lib/db/priceManagement/getPrice";
 import { removeCode } from "../../lib/db/codeManagement/removeCode";
 import { updateUser } from "../../lib/db/userManagement/updateUsers";
+import { addTransaction } from "../../lib/db/transactionManagement/addTransaction";
 
 // ADMIN ONLY
 
@@ -102,7 +103,7 @@ export default new Command({
         // });
 
         for(let i in codes){
-            console.log(codes[i])
+            addTransaction(clientUsername, codes[i], await getPrice());
             invoice.addFields({ name: 'Code Value', value: `${'```'}${codes[i]}${'```'}` });
 
         }
