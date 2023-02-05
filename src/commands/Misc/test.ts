@@ -14,5 +14,5 @@ export default new Command({
 
         const codes = await removeCode(3);
         console.log(await codes)
-}
+    }
 })

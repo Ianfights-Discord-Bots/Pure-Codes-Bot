@@ -98,11 +98,11 @@ export default new Command({
 
         invoice.addFields({ name: 'Code Length', value: `${'```'}14 days${'```'}` });
         // codes.map((data) => {
-            // invoice.addFields({ name: 'Code Value', value: `${'```'}${data}${'```'}` });
+        // invoice.addFields({ name: 'Code Value', value: `${'```'}${data}${'```'}` });
 
         // });
 
-        for(let i in codes){
+        for (let i in codes) {
             addTransaction(clientUsername, codes[i], await getPrice());
             invoice.addFields({ name: 'Code Value', value: `${'```'}${codes[i]}${'```'}` });
 
@@ -118,7 +118,7 @@ export default new Command({
         //@ts-ignore
 
         // Send it to the receipts channel
-        interaction.guild.channels.cache.get('849839901108469771').send({ embeds: [invoice] })
+        interaction.guild.channels.cache.get('997648000631439472').send({ embeds: [invoice] })
 
 
         interaction.reply(`Thank you <@${user}> for purchasing from us. If you could leave us some <#997580908896997447> and on [Our Sythe](https://www.sythe.org/threads/chimps-accounts-services-vouches). If you have any questions about the code please message any of the <@&997585123430113310> for help. We look forward to welcoming you again soon.\nYou order receipt along with the membership codes will be sent via DM to you now.`);
@@ -127,7 +127,7 @@ export default new Command({
         // log(`Employee Username: ${interactionAuthor.username}#${interactionAuthor.discriminator}\nCustomer Username: ${clientUsername}#${clientUser.discriminator}\nUUID: ${clientUser.id}\nCode: ${usedCode}\nLength: ${length}\nDate: ${now}\nCrypto Price: ${trunc(info.prices[`${length}_day`])}\nMethod: ${paymentMethod}\n\n`)
 
         //@ts-ignore
-        updateUser(user, {purchaseType: 'Code', quantity: amount, pricePerUnit: await getPrice(), totalPurchaseAmount: await getPrice() * amount, employee: interactionAuthor.id, now})
+        updateUser(user, { purchaseType: 'Code', quantity: amount, pricePerUnit: await getPrice(), totalPurchaseAmount: await getPrice() * amount, employee: interactionAuthor.id, now })
 
     }
 })

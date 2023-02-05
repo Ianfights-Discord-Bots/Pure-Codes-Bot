@@ -17,7 +17,7 @@ export const client = new ExtendedClient();
 initDb();
 
 client.start();
-// startJobs();
+startJobs();
 // initServer();
 // delPrevCheckouts();
 // createButtons();

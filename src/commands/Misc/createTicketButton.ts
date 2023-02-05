@@ -31,13 +31,14 @@ export default new Command({
                             description: 'Click me if you want to make a ticket membership codes!',
                             value: 'membershipCodes',
                         },
-                        {   emoji:'👤',
+                        {
+                            emoji: '👤',
                             label: 'Accounts',
                             description: 'Click me if you want to make a ticket for account sales!',
                             value: 'accounts',
                         },
                         {
-                            emoji:'<:OsrsGold:1048770125718880316>',
+                            emoji: '<:OsrsGold:1048770125718880316>',
                             label: 'Gold',
                             description: 'Click me if you want to make a ticket for gold sales!',
                             value: 'gold',

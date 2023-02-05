@@ -61,10 +61,10 @@ export default new Command({
             const data = interaction.options.get('value').value;
             console.log(codes.paymentMethods);
             console.log(option, data)
-            
+
             //@ts-ignore
             codes.paymentMethods[option] = data;
-            
+
 
 
             console.log(codes.paymentMethods);
