@@ -88,7 +88,7 @@ export default new Command({
 
         switch (paymentMethod) {
             case 'cash':                                                            //@ts-ignore
-                invoice.setDescription(`Payment Method: **Cash**\nPrice ${'```'}$${trunc((await getPrice())) * (amount)}${'```'} \nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee${'```'}${handlingTransactionUsername} ${'```'}`)
+                invoice.setDescription(`Payment Method: **Cash**\nPrice ${'```'}$${trunc((await getPrice())) * (amount)}${'```'} \nPrice Per Unit ${'```'}$${await getPrice()}${'```'}\nCustomer ${'```'}${clientUsername} ${'```'} \nEmployee${'```'}${handlingTransactionUsername} ${'```'}`)
                 break;
             case 'giveaway':
                 invoice.setDescription(`Congrats! You have won a giveaway for a 14 day code. \n`)
