@@ -1,4 +1,4 @@
-import { CommandInteractionOptionResolver, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } from "discord.js";
+import { CommandInteractionOptionResolver, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import { client } from "..";
 import bulkAdd from "../commands/CodeManagement/bulkAdd";
 import { Event } from "../lib/structures/Event";
@@ -8,6 +8,7 @@ import { openAccTicket } from "./ticketCreations/account/accTicket";
 import { openGoldTicket } from "./ticketCreations/gold/goldTicket";
 import { addBulk } from "./ticketCreations/membership/addBulk";
 import { openMembershipTicket } from "./ticketCreations/membership/membershipTicket";
+import { autoInvoiceCreate } from "./ticketCreations/membership/createAutoInvoice";
 
 export default new Event("interactionCreate", (interaction) => {
     // Chat Input Commands
@@ -42,11 +43,39 @@ export default new Event("interactionCreate", (interaction) => {
             case 'deleteTicket':
                 interaction.channel.delete();
                 break;
+            case 'autoBuyCreate':
+                const modal = new ModalBuilder()
+                .setCustomId('cryptoAutoBuy')
+                .setTitle('Upload Codes');
+    
+            const codeInput = new TextInputBuilder()
+                .setCustomId('amount')
+                .setLabel("Number of codes desired")
+                .setStyle(TextInputStyle.Short)
+                .setRequired(true);
+    
+                const email = new TextInputBuilder()
+                .setCustomId('email')
+                .setLabel("Email where codes will be sent")
+                .setStyle(TextInputStyle.Short)
+                .setRequired(true);
+    
+            const firstActionRow = new ActionRowBuilder().addComponents(codeInput);
+            const sar = new ActionRowBuilder().addComponents(email);
+
+            //@ts-ignore
+            modal.addComponents(firstActionRow,sar);
+            //@ts-ignore
+            interaction.showModal(modal);
+                break;
             case 'bulkAdd':
                 //@ts-ignore
                 // console.log(interaction.fields.fields.get('codes'))
                 addBulk(interaction)
-
+                break;
+            case 'cryptoAutoBuy':
+                autoInvoiceCreate(interaction)
+            break;
                 }
         if (interaction.customId.includes('ticketClose', 0)) {
                     let user = interaction.customId.replace('ticketClose_', '');

@@ -6,7 +6,8 @@ export const createInvoice = async (
     memo: string,
     localPrice: { amount: number, currency: 'USD' | 'EUR' | 'GBP' },
     apiKey: string,
-    interaction?
+    interaction?,
+    autoCreate?
 ) => {
     const data = JSON.stringify({
         local_price: localPrice,
@@ -30,8 +31,12 @@ export const createInvoice = async (
     axios(config)
         .then(async (response) => {
             console.log(response.data.data.code);
-            if(interaction){
-                interaction.reply(`Your invoice has been created! Please go to https://commerce.coinbase.com/invoices/${response.data.data.code} to pay!`)
+            if (interaction) {
+                if (autoCreate) {
+                    interaction.reply({ content: `Your invoice has been created! Please go to https://commerce.coinbase.com/invoices/${response.data.data.code} to pay!`, ephemeral: true })
+                } else {
+                    interaction.reply(`Your invoice has been created! Please go to https://commerce.coinbase.com/invoices/${response.data.data.code} to pay!`)
+                }
             }
         })
         .catch((error) => {
