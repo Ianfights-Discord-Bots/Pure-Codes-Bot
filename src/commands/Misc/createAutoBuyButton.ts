@@ -12,14 +12,14 @@ export default new Command({
 
 
         const row = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`autoBuyCreate`)
-                        .setLabel('Purchase Codes')
-                        .setStyle(ButtonStyle.Success),
-                )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`autoBuyCreate`)
+                    .setLabel('Purchase Codes')
+                    .setStyle(ButtonStyle.Success),
+            )
         //@ts-ignore
-        interaction.channel.send({content: 'Click the button below to purchase codes automatically!', components: [row]})
+        interaction.channel.send({ content: 'Click the button below to purchase codes automatically!', components: [row] })
 
         // const modal = new ModalBuilder()
         //     .setCustomId('cryptoAutoBuy')
