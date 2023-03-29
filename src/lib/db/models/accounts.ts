@@ -13,13 +13,20 @@ const accounts = new Schema(
             required: true
         },
 
+        username: {
+            type: String,
+            required: true
+        },
+
         password: {
             type: String,
             required: true
         },
 
         pin: {
-            type: Number,
+            type: String,
+            required: false,
+            default: 'N/A'
         },
 
         price: {
@@ -37,21 +44,6 @@ const accounts = new Schema(
             required: true
         },
 
-        dateCreated: {
-            type: String,
-            required: true
-        },
-
-        dob: {
-            type: String,
-            required: true
-        },
-
-        creationIp: {
-            type: String,
-            required: true
-        },
-
         bans:{
             type: Array,
             required: false
@@ -59,12 +51,18 @@ const accounts = new Schema(
 
         emailLinked: {
             type: String,
-            required: false
+            required: false,
+            default: 'N/A'
+        },
+
+        sold: {
+            type: Boolean,
+            required: true
         }
     },
     { timestamps: true }
 );
 
-const Accounts = model("codes", accounts);
+const Accounts = model("accounts", accounts);
 
 export { Accounts as Accounts };
