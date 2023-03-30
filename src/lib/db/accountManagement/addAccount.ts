@@ -18,8 +18,8 @@ export const addAccount = async (
         password,
         price,
         description,
-        bankPin,
-        emailLinked,
+        bankPin: bankPin ? bankPin : 'N/A',
+        emailLinked: emailLinked ? emailLinked : 'N/A',
         sold: false
     });
 

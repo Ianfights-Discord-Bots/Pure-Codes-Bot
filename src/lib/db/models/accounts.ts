@@ -6,6 +6,8 @@ import { Schema, model } from "mongoose";
 //     pricePurchased: Number
 // }
 
+
+
 const accounts = new Schema(
     {
         loginEmail: {
@@ -44,20 +46,22 @@ const accounts = new Schema(
             required: true
         },
 
-        bans:{
-            type: Array,
+        bans: {
+            type: Array<object>,
             required: false
         },
 
         emailLinked: {
             type: String,
-            required: false,
-            default: 'N/A'
+            default: 'N/A',
+            required: true
         },
 
         sold: {
             type: Boolean,
-            required: true
+            default: false,
+            required: true,
+
         }
     },
     { timestamps: true }
