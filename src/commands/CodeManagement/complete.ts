@@ -103,7 +103,7 @@ export default new Command({
         // });
 
         for (let i in codes) {
-            addTransaction(clientUsername, codes[i], await getPrice());
+            addTransaction(clientUsername, codes[i], await getPrice(), paymentMethod);
             invoice.addFields({ name: 'Code Value', value: `${'```'}${codes[i]}${'```'}` });
 
         }

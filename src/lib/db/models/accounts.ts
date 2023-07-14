@@ -15,22 +15,10 @@ const accounts = new Schema(
             required: true
         },
 
-        username: {
-            type: String,
-            required: true
-        },
-
         password: {
             type: String,
             required: true
         },
-
-        pin: {
-            type: String,
-            required: false,
-            default: 'N/A'
-        },
-
         price: {
             type: Number,
             reqired: true
@@ -43,17 +31,6 @@ const accounts = new Schema(
 
         description: {
             type: String,
-            required: true
-        },
-
-        bans: {
-            type: Array<object>,
-            required: false
-        },
-
-        emailLinked: {
-            type: String,
-            default: 'N/A',
             required: true
         },
 

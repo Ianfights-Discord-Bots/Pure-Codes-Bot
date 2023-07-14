@@ -18,6 +18,15 @@ const transactions = new Schema(
         price: {
             type: Number,
             required: true
+        },
+        purchaseType: {
+            type: String,
+            required: false,
+            default: 'Code'
+        },
+        paymentMethod: {
+            type: String,
+            required: false
         }
     },
     { timestamps: true }
