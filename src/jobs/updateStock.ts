@@ -36,7 +36,6 @@ const updateStock = async () => {
     // await newId;
 
     updateStockId(await newId)
-    console.log(await sellix.products.list());
 }
 
 export { updateStock as updateStock }
