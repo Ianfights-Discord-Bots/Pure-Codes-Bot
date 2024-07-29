@@ -15,6 +15,7 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "@sellix/node-sdk": "^1.0.13",
         "@sendgrid/mail": "^7.7.0",
         "axios": "^1.2.2",
         "coinbase-commerce-node": "^1.0.4",
