@@ -13,7 +13,7 @@ export const client = new ExtendedClient();
 initDb();
 
 client.start();
-startJobs();
+// startJobs();
 
 
 
